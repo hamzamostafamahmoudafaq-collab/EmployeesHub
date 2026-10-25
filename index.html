@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EmployeeHub Dashboard</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/main.js" defer></script>
+</head>
+
+<body>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <h2>EmployeeHub</h2>
+
+            <nav>
+                <a href="#dashboard" class="active">Dashboard</a>
+                <a href="#employees">Employees</a>
+                <a href="#add-employee">Add Employee</a>
+            </nav>
+
+            <p class="sidebar-footer">Employee Management System</p>
+        </aside>
+
+        <main class="main-content" id="dashboard">
+            <header class="header">
+                <div>
+                    <p class="eyebrow">EMPLOYEE MANAGEMENT</p>
+                    <h1>Employee Dashboard</h1>
+                    <p>Manage your employees in one place.</p>
+                </div>
+
+                <a class="header-button" href="#add-employee">
+                    + Add Employee
+                </a>
+            </header>
+
+            <section class="stats">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <h3>Total Employees</h3>
+                    <p id="total-employees">0</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🏢</div>
+                    <h3>Management</h3>
+                    <p class="stat-description">Employees</p>
+                </div>
+            </section>
+
+            <section id="employees" class="section-panel">
+                <div class="section-header">
+                    <div>
+                        <h2>All Employees</h2>
+                        <p class="muted">View and manage your team.</p>
+                    </div>
+
+                    <button type="button" id="refresh-button" class="secondary-button">
+                        Refresh
+                    </button>
+                </div>
+
+                <form id="search-form" class="search-form">
+                    <input
+                        type="text"
+                        id="search-name"
+                        placeholder="Search employees by name..."
+                        aria-label="Search employees by name"
+                    >
+
+                    <button type="submit">Search</button>
+
+                    <button
+                        type="button"
+                        id="clear-search"
+                        class="secondary-button"
+                    >
+                        Show All
+                    </button>
+                </form>
+
+                <p id="list-message" class="message" aria-live="polite"></p>
+
+                <div class="cards" id="employee-cards">
+                    <p class="empty-state">Loading employees...</p>
+                </div>
+            </section>
+
+            <section id="add-employee" class="section-panel add-section">
+                <div class="section-header">
+                    <div>
+                        <h2 id="form-title">Add New Employee</h2>
+                        <p class="muted">Enter the employee's information.</p>
+                    </div>
+                </div>
+
+                <form id="employee-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="employee-name">Employee Name</label>
+                            <input
+                                type="text"
+                                id="employee-name"
+                                placeholder="Enter employee name"
+                                maxlength="100"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="employee-age">Employee Age</label>
+                            <input
+                                type="number"
+                                id="employee-age"
+                                placeholder="Enter employee age"
+                                min="1"
+                                max="120"
+                                step="1"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" id="submit-button">
+                            Add Employee
+                        </button>
+
+                        <button
+                            type="button"
+                            id="cancel-edit"
+                            class="secondary-button"
+                            hidden
+                        >
+                            Cancel Edit
+                        </button>
+                    </div>
+
+                    <p id="form-message" class="message" aria-live="polite"></p>
+                </form>
+            </section>
+
+            <footer class="footer">
+                EmployeeHub &copy; 2026 — Employee Management System
+            </footer>
+        </main>
+    </div>
+</body>
+</html>
