@@ -17,11 +17,9 @@ app = FastAPI(title="EmployeeHub API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://studenthub-1-b9rt.onrender.com",
-        "http://127.0.0.1:5500",
-        "http://localhost:5500",
+        "https://employeehub.hamzamostafaafaq.workers.dev"
     ],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -72,10 +70,17 @@ def home():
 def get_employees():
     with get_connection() as connection:
         employees = connection.execute(
-            "SELECT id, name, age FROM employees ORDER BY id DESC"
+            """
+            SELECT id, name, age
+            FROM employees
+            ORDER BY id DESC
+            """
         ).fetchall()
 
-    return [employee_to_dict(employee) for employee in employees]
+    return [
+        employee_to_dict(employee)
+        for employee in employees
+    ]
 
 
 @app.get("/employees/search")
@@ -99,14 +104,21 @@ def search_employees(name: str):
             (f"%{name}%",),
         ).fetchall()
 
-    return [employee_to_dict(employee) for employee in employees]
+    return [
+        employee_to_dict(employee)
+        for employee in employees
+    ]
 
 
 @app.get("/employees/{employee_id}")
 def get_employee(employee_id: int):
     with get_connection() as connection:
         employee = connection.execute(
-            "SELECT id, name, age FROM employees WHERE id = ?",
+            """
+            SELECT id, name, age
+            FROM employees
+            WHERE id = ?
+            """,
             (employee_id,),
         ).fetchone()
 
@@ -137,14 +149,21 @@ def add_employee(name: str, age: int):
 
     with get_connection() as connection:
         cursor = connection.execute(
-            "INSERT INTO employees (name, age) VALUES (?, ?)",
+            """
+            INSERT INTO employees (name, age)
+            VALUES (?, ?)
+            """,
             (name, age),
         )
 
         employee_id = cursor.lastrowid
 
         employee = connection.execute(
-            "SELECT id, name, age FROM employees WHERE id = ?",
+            """
+            SELECT id, name, age
+            FROM employees
+            WHERE id = ?
+            """,
             (employee_id,),
         ).fetchone()
 
@@ -187,7 +206,11 @@ def update_employee(employee_id: int, name: str, age: int):
             )
 
         employee = connection.execute(
-            "SELECT id, name, age FROM employees WHERE id = ?",
+            """
+            SELECT id, name, age
+            FROM employees
+            WHERE id = ?
+            """,
             (employee_id,),
         ).fetchone()
 
@@ -211,4 +234,6 @@ def delete_employee(employee_id: int):
                 detail="Employee not found",
             )
 
-    return {"message": "Employee deleted successfully"}
+    return {
+        "message": "Employee deleted successfully"
+    }
